@@ -1,0 +1,418 @@
+"<!doctype html>
+<html lang=\"en\">
+<head>
+<meta charset=\"utf-8\" />
+<meta name=\"viewport\" content=\"width=device-width,initial-scale=1\" />
+<title>Lanrad — Trusted Shell Shockers Moderator</title>
+<meta name=\"description\" content=\"Lanrad — trusted moderator across Shell Shockers, administrating partnered Mask League servers with thousands of members.\" />
+<link rel=\"preconnect\" href=\"https://fonts.googleapis.com\" />
+<link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin />
+<link href=\"https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap\" rel=\"stylesheet\" />
+<style>
+  :root{
+    --bg: #0a0b0d;
+    --bg-2: #0f1114;
+    --panel: #14171c;
+    --panel-2: #1a1e24;
+    --border: #23272f;
+    --border-2: #2e333c;
+    --text: #e8eaed;
+    --muted: #9aa2ad;
+    --dim: #6b7280;
+    --accent: #e7c84a;    /* egg-yolk gold */
+    --accent-2: #f5d976;
+    --accent-soft: rgba(231,200,74,0.12);
+    --discord: #5865f2;
+    --twitch: #9146ff;
+    --youtube: #ff3b3b;
+    --radius: 14px;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:'Manrope',ui-sans-serif,system-ui,sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  body{overflow-x:hidden;line-height:1.55;}
+  ::selection{background:var(--accent);color:#1a1503;}
+
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%}
+
+  /* Background grain + subtle gradient */
+  body::before{
+    content:\"\";
+    position:fixed;inset:0;
+    background:
+      radial-gradient(900px 500px at 80% -10%, rgba(231,200,74,0.08), transparent 60%),
+      radial-gradient(700px 500px at -10% 20%, rgba(88,101,242,0.06), transparent 60%);
+    pointer-events:none;z-index:0;
+  }
+  body::after{
+    content:\"\";
+    position:fixed;inset:0;
+    background-image:url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.35'/></svg>\");
+    opacity:.04;mix-blend-mode:overlay;pointer-events:none;z-index:0;
+  }
+
+  .container{max-width:1120px;margin:0 auto;padding:0 28px;position:relative;z-index:1}
+
+  /* Nav */
+  nav.top{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:22px 0;
+  }
+  .brand{display:flex;align-items:center;gap:12px;font-weight:800;letter-spacing:.02em}
+  .brand-mark{
+    width:34px;height:34px;border-radius:10px;
+    background:linear-gradient(140deg,var(--accent),#caa628);
+    display:grid;place-items:center;color:#111;font-weight:800;
+    box-shadow:0 6px 20px -8px rgba(231,200,74,.6), inset 0 1px 0 rgba(255,255,255,.4);
+  }
+  .nav-links{display:flex;gap:22px;color:var(--muted);font-size:14px}
+  .nav-links a{transition:color .2s}
+  .nav-links a:hover{color:var(--text)}
+  @media(max-width:640px){.nav-links{display:none}}
+
+  /* Hero */
+  header.hero{padding:60px 0 56px;position:relative}
+  .pill{
+    display:inline-flex;align-items:center;gap:10px;
+    padding:8px 14px;border:1px solid var(--border);background:rgba(255,255,255,0.02);
+    border-radius:999px;font-size:13px;color:var(--muted);
+  }
+  .pill .dot{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px var(--accent-soft);animation:pulse 2.2s ease-in-out infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.55}}
+
+  h1{
+    font-size: clamp(44px, 7vw, 88px);
+    line-height: 1.02;
+    letter-spacing: -0.03em;
+    margin: 22px 0 18px;
+    font-weight: 800;
+  }
+  h1 .accent{
+    background:linear-gradient(180deg,var(--accent-2),var(--accent));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .lede{
+    max-width:680px;color:var(--muted);font-size:18px;
+  }
+  .lede strong{color:var(--text);font-weight:600}
+
+  .cta-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+  .btn{
+    display:inline-flex;align-items:center;gap:10px;
+    padding:12px 18px;border-radius:12px;
+    font-weight:600;font-size:14px;
+    border:1px solid var(--border);background:var(--panel);
+    transition:transform .15s ease, border-color .2s ease, background .2s ease;
+  }
+  .btn:hover{transform:translateY(-1px);border-color:var(--border-2);background:var(--panel-2)}
+  .btn.primary{
+    background:linear-gradient(180deg,var(--accent-2),var(--accent));
+    color:#1a1503;border-color:transparent;
+    box-shadow:0 10px 30px -12px rgba(231,200,74,.5);
+  }
+  .btn.primary:hover{filter:brightness(1.05)}
+
+  /* Stat row */
+  .stats{
+    margin-top:48px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;
+  }
+  @media(max-width:640px){.stats{grid-template-columns:1fr 1fr}}
+  .stat{
+    border:1px solid var(--border);background:var(--panel);border-radius:var(--radius);
+    padding:18px 20px;
+  }
+  .stat .n{font-size:26px;font-weight:800;letter-spacing:-.02em}
+  .stat .l{font-size:13px;color:var(--muted);margin-top:4px}
+
+  /* Section header */
+  section{padding:56px 0;position:relative}
+  .eyebrow{
+    font-family:'JetBrains Mono',ui-monospace,monospace;
+    font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);
+  }
+  h2{
+    font-size: clamp(28px, 4vw, 40px);
+    line-height:1.1;letter-spacing:-.02em;margin:10px 0 8px;font-weight:700;
+  }
+  .section-sub{color:var(--muted);max-width:640px}
+
+  /* Bio */
+  .bio-card{
+    margin-top:28px;border:1px solid var(--border);background:var(--panel);
+    border-radius:18px;padding:28px;position:relative;overflow:hidden;
+  }
+  .bio-card::before{
+    content:\"\";position:absolute;inset:-1px;border-radius:18px;
+    background:linear-gradient(140deg,rgba(231,200,74,.25),transparent 40%);
+    -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+    -webkit-mask-composite:xor;mask-composite:exclude;padding:1px;pointer-events:none;
+  }
+  .bio-card p{color:var(--muted);margin:0}
+  .bio-card .placeholder{
+    border-left:2px solid var(--accent);padding:6px 0 6px 14px;
+    color:var(--dim);font-style:italic;
+  }
+
+  /* Community grid */
+  .grid{
+    margin-top:32px;display:grid;gap:16px;
+    grid-template-columns:repeat(2,1fr);
+  }
+  @media(max-width:720px){.grid{grid-template-columns:1fr}}
+
+  .card{
+    position:relative;display:flex;flex-direction:column;gap:14px;
+    border:1px solid var(--border);background:var(--panel);
+    border-radius:var(--radius);padding:22px;
+    transition:transform .2s ease, border-color .2s ease, background .2s ease;
+  }
+  .card:hover{transform:translateY(-2px);border-color:var(--border-2);background:var(--panel-2)}
+  .card .region{
+    font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--muted);
+  }
+  .card h3{margin:0;font-size:20px;letter-spacing:-.01em}
+  .card .tag{
+    display:inline-flex;align-items:center;gap:6px;
+    font-size:11px;padding:4px 8px;border-radius:6px;
+    border:1px solid var(--border-2);color:var(--muted);
+    font-family:'JetBrains Mono',monospace;
+  }
+  .card .tag.won{color:var(--accent);border-color:rgba(231,200,74,.35);background:var(--accent-soft)}
+  .card .join{
+    margin-top:auto;display:inline-flex;align-items:center;gap:8px;
+    color:var(--text);font-weight:600;font-size:14px;
+  }
+  .card .join svg{transition:transform .2s ease}
+  .card:hover .join svg{transform:translateX(3px)}
+  .card .platform{
+    position:absolute;top:18px;right:18px;
+    width:34px;height:34px;border-radius:9px;
+    background:rgba(88,101,242,.12);color:var(--discord);
+    display:grid;place-items:center;
+  }
+
+  /* Socials */
+  .socials{
+    margin-top:32px;display:grid;gap:16px;grid-template-columns:1fr 1fr;
+  }
+  @media(max-width:640px){.socials{grid-template-columns:1fr}}
+  .social{
+    display:flex;align-items:center;gap:16px;padding:22px;
+    border:1px solid var(--border);background:var(--panel);border-radius:var(--radius);
+    transition:transform .2s,border-color .2s,background .2s;
+  }
+  .social:hover{transform:translateY(-2px);border-color:var(--border-2);background:var(--panel-2)}
+  .social .icon{
+    width:46px;height:46px;border-radius:12px;display:grid;place-items:center;flex-shrink:0;
+  }
+  .social.twitch .icon{background:rgba(145,70,255,.14);color:var(--twitch)}
+  .social.youtube .icon{background:rgba(255,59,59,.12);color:var(--youtube)}
+  .social .label{font-size:12px;color:var(--muted);font-family:'JetBrains Mono',monospace;letter-spacing:.14em;text-transform:uppercase}
+  .social .handle{font-weight:700;font-size:18px;letter-spacing:-.01em}
+
+  /* Footer */
+  footer{
+    border-top:1px solid var(--border);margin-top:40px;padding:34px 0 50px;
+    color:var(--muted);font-size:13px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
+  }
+  footer .mono{font-family:'JetBrains Mono',monospace}
+
+  /* tiny fade-in */
+  .reveal{opacity:0;transform:translateY(10px);animation:rise .8s cubic-bezier(.2,.7,.2,1) forwards}
+  .reveal[data-d=\"1\"]{animation-delay:.05s}
+  .reveal[data-d=\"2\"]{animation-delay:.12s}
+  .reveal[data-d=\"3\"]{animation-delay:.20s}
+  .reveal[data-d=\"4\"]{animation-delay:.28s}
+  @keyframes rise{to{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+
+<div class=\"container\">
+
+  <nav class=\"top\">
+    <div class=\"brand\">
+      <div class=\"brand-mark\">L</div>
+      <span>Lanrad</span>
+    </div>
+    <div class=\"nav-links\">
+      <a href=\"#about\">About</a>
+      <a href=\"#communities\">Communities</a>
+      <a href=\"#streams\">Streams</a>
+    </div>
+  </nav>
+
+  <header class=\"hero\">
+    <span class=\"pill reveal\" data-d=\"1\">
+      <span class=\"dot\"></span> Trusted Shell Shockers Moderator
+    </span>
+    <h1 class=\"reveal\" data-d=\"2\">
+      I&rsquo;m <span class=\"accent\">Lanrad</span>.<br/>
+      I run the servers you play in.
+    </h1>
+    <p class=\"lede reveal\" data-d=\"3\">
+      Admin and trusted moderator across <strong>partnered Mask League servers</strong> in Shell Shockers
+      &mdash; spanning <strong>North America, Europe, Asia Pacific, and Taiwan</strong>, with thousands of
+      members combined. Also stewarding the <strong>Content Creator Cove</strong> server I won.
+    </p>
+
+    <div class=\"cta-row reveal\" data-d=\"4\">
+      <a class=\"btn primary\" href=\"#communities\">
+        Browse Communities
+        <svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\"><path d=\"M5 12h14M13 6l6 6-6 6\"/></svg>
+      </a>
+      <a class=\"btn\" href=\"https://www.twitch.tv/drag_losw\" target=\"_blank\" rel=\"noopener\">
+        <svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"currentColor\"><path d=\"M4 2l-2 5v14h6v3h3l3-3h5l5-5V2H4zm17 11l-3 3h-5l-3 3v-3H6V4h15v9zM16 7v6h-2V7h2zm-5 0v6H9V7h2z\"/></svg>
+        Watch live
+      </a>
+    </div>
+
+    <div class=\"stats\">
+      <div class=\"stat reveal\" data-d=\"2\"><div class=\"n\">6</div><div class=\"l\">Partnered servers</div></div>
+      <div class=\"stat reveal\" data-d=\"3\"><div class=\"n\">1000s</div><div class=\"l\">Members across communities</div></div>
+      <div class=\"stat reveal\" data-d=\"4\"><div class=\"n\">4</div><div class=\"l\">Regions covered</div></div>
+    </div>
+  </header>
+
+  <!-- About -->
+  <section id=\"about\">
+    <div class=\"eyebrow\">// 01 — About</div>
+    <h2>The mod behind the matches.</h2>
+    <p class=\"section-sub\">A quick intro &mdash; your custom bio goes here when you&rsquo;re ready.</p>
+
+    <div class=\"bio-card\">
+      <p class=\"placeholder\">
+        [ Lanrad &mdash; paste your bio here. Replace this text inside <code style=\"font-family:'JetBrains Mono',monospace;color:#cfd3dc\">index.html</code>
+        in the section labeled <code style=\"font-family:'JetBrains Mono',monospace;color:#cfd3dc\">&lt;!-- BIO --&gt;</code>. ]
+      </p>
+    </div>
+  </section>
+
+  <!-- Communities -->
+  <section id=\"communities\">
+    <div class=\"eyebrow\">// 02 — Communities</div>
+    <h2>Partnered servers I moderate.</h2>
+    <p class=\"section-sub\">Official Mask League servers across every region, plus the community I built up after winning Content Creator Cove.</p>
+
+    <div class=\"grid\">
+
+      <a class=\"card\" href=\"https://discord.gg/Pa5mu98pZM\" target=\"_blank\" rel=\"noopener\">
+        <div class=\"platform\" aria-label=\"Discord\">
+          <svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"currentColor\"><path d=\"M20.317 4.369A19.79 19.79 0 0 0 16.558 3a14.6 14.6 0 0 0-.642 1.32 18.27 18.27 0 0 0-5.487 0A12.6 12.6 0 0 0 9.785 3a19.74 19.74 0 0 0-3.762 1.37C2.418 9.79 1.526 15.07 1.972 20.27a19.93 19.93 0 0 0 6.075 3.07c.491-.67.93-1.38 1.305-2.13a12.9 12.9 0 0 1-2.054-.99c.172-.127.34-.26.504-.394 3.927 1.82 8.183 1.82 12.063 0 .165.135.333.267.504.394-.658.39-1.345.722-2.055.99.376.75.815 1.46 1.305 2.13a19.91 19.91 0 0 0 6.077-3.07c.522-6.03-.892-11.26-4.075-15.9zM8.02 17.05c-1.208 0-2.2-1.11-2.2-2.47s.97-2.48 2.2-2.48c1.23 0 2.222 1.12 2.2 2.48 0 1.36-.97 2.47-2.2 2.47zm7.96 0c-1.21 0-2.2-1.11-2.2-2.47s.97-2.48 2.2-2.48c1.23 0 2.22 1.12 2.2 2.48 0 1.36-.97 2.47-2.2 2.47z\"/></svg>
+        </div>
+        <span class=\"region\">North America &middot; Classic</span>
+        <h3>Mask League NA Classic</h3>
+        <span class=\"tag\">Partnered</span>
+        <span class=\"join\">
+          Join server
+          <svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\"><path d=\"M5 12h14M13 6l6 6-6 6\"/></svg>
+        </span>
+      </a>
+
+      <a class=\"card\" href=\"https://discord.gg/WSkJXdFRZF\" target=\"_blank\" rel=\"noopener\">
+        <div class=\"platform\">
+          <svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"currentColor\"><path d=\"M20.317 4.369A19.79 19.79 0 0 0 16.558 3a14.6 14.6 0 0 0-.642 1.32 18.27 18.27 0 0 0-5.487 0A12.6 12.6 0 0 0 9.785 3a19.74 19.74 0 0 0-3.762 1.37C2.418 9.79 1.526 15.07 1.972 20.27a19.93 19.93 0 0 0 6.075 3.07c.491-.67.93-1.38 1.305-2.13a12.9 12.9 0 0 1-2.054-.99c.172-.127.34-.26.504-.394 3.927 1.82 8.183 1.82 12.063 0 .165.135.333.267.504.394-.658.39-1.345.722-2.055.99.376.75.815 1.46 1.305 2.13a19.91 19.91 0 0 0 6.077-3.07c.522-6.03-.892-11.26-4.075-15.9zM8.02 17.05c-1.208 0-2.2-1.11-2.2-2.47s.97-2.48 2.2-2.48c1.23 0 2.222 1.12 2.2 2.48 0 1.36-.97 2.47-2.2 2.47zm7.96 0c-1.21 0-2.2-1.11-2.2-2.47s.97-2.48 2.2-2.48c1.23 0 2.22 1.12 2.2 2.48 0 1.36-.97 2.47-2.2 2.47z\"/></svg>
+        </div>
+        <span class=\"region\">Europe &middot; Classic</span>
+        <h3>Mask League EU Classic</h3>
+        <span class=\"tag\">Partnered</span>
+        <span class=\"join\">Join server
+          <svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\"><path d=\"M5 12h14M13 6l6 6-6 6\"/></svg>
+        </span>
+      </a>
+
+      <a class=\"card\" href=\"https://discord.gg/2esnEWYY5j\" target=\"_blank\" rel=\"noopener\">
+        <div class=\"platform\">
+          <svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"currentColor\"><path d=\"M20.317 4.369A19.79 19.79 0 0 0 16.558 3a14.6 14.6 0 0 0-.642 1.32 18.27 18.27 0 0 0-5.487 0A12.6 12.6 0 0 0 9.785 3a19.74 19.74 0 0 0-3.762 1.37C2.418 9.79 1.526 15.07 1.972 20.27a19.93 19.93 0 0 0 6.075 3.07c.491-.67.93-1.38 1.305-2.13a12.9 12.9 0 0 1-2.054-.99c.172-.127.34-.26.504-.394 3.927 1.82 8.183 1.82 12.063 0 .165.135.333.267.504.394-.658.39-1.345.722-2.055.99.376.75.815 1.46 1.305 2.13a19.91 19.91 0 0 0 6.077-3.07c.522-6.03-.892-11.26-4.075-15.9zM8.02 17.05c-1.208 0-2.2-1.11-2.2-2.47s.97-2.48 2.2-2.48c1.23 0 2.222 1.12 2.2 2.48 0 1.36-.97 2.47-2.2 2.47zm7.96 0c-1.21 0-2.2-1.11-2.2-2.47s.97-2.48 2.2-2.48c1.23 0 2.22 1.12 2.2 2.48 0 1.36-.97 2.47-2.2 2.47z\"/></svg>
+        </div>
+        <span class=\"region\">Asia Pacific &middot; Classic</span>
+        <h3>Mask League APAC Classic</h3>
+        <span class=\"tag\">Partnered</span>
+        <span class=\"join\">Join server
+          <svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\"><path d=\"M5 12h14M13 6l6 6-6 6\"/></svg>
+        </span>
+      </a>
+
+      <a class=\"card\" href=\"https://discord.gg/EUaPkhzvAa\" target=\"_blank\" rel=\"noopener\">
+        <div class=\"platform\">
+          <svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"currentColor\"><path d=\"M20.317 4.369A19.79 19.79 0 0 0 16.558 3a14.6 14.6 0 0 0-.642 1.32 18.27 18.27 0 0 0-5.487 0A12.6 12.6 0 0 0 9.785 3a19.74 19.74 0 0 0-3.762 1.37C2.418 9.79 1.526 15.07 1.972 20.27a19.93 19.93 0 0 0 6.075 3.07c.491-.67.93-1.38 1.305-2.13a12.9 12.9 0 0 1-2.054-.99c.172-.127.34-.26.504-.394 3.927 1.82 8.183 1.82 12.063 0 .165.135.333.267.504.394-.658.39-1.345.722-2.055.99.376.75.815 1.46 1.305 2.13a19.91 19.91 0 0 0 6.077-3.07c.522-6.03-.892-11.26-4.075-15.9zM8.02 17.05c-1.208 0-2.2-1.11-2.2-2.47s.97-2.48 2.2-2.48c1.23 0 2.222 1.12 2.2 2.48 0 1.36-.97 2.47-2.2 2.47zm7.96 0c-1.21 0-2.2-1.11-2.2-2.47s.97-2.48 2.2-2.48c1.23 0 2.22 1.12 2.2 2.48 0 1.36-.97 2.47-2.2 2.47z\"/></svg>
+        </div>
+        <span class=\"region\">Taiwan &middot; Classic</span>
+        <h3>Mask League TW Classic</h3>
+        <span class=\"tag\">Partnered</span>
+        <span class=\"join\">Join server
+          <svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\"><path d=\"M5 12h14M13 6l6 6-6 6\"/></svg>
+        </span>
+      </a>
+
+      <a class=\"card\" href=\"https://discord.gg/5v5M4pR6CG\" target=\"_blank\" rel=\"noopener\">
+        <div class=\"platform\">
+          <svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"currentColor\"><path d=\"M20.317 4.369A19.79 19.79 0 0 0 16.558 3a14.6 14.6 0 0 0-.642 1.32 18.27 18.27 0 0 0-5.487 0A12.6 12.6 0 0 0 9.785 3a19.74 19.74 0 0 0-3.762 1.37C2.418 9.79 1.526 15.07 1.972 20.27a19.93 19.93 0 0 0 6.075 3.07c.491-.67.93-1.38 1.305-2.13a12.9 12.9 0 0 1-2.054-.99c.172-.127.34-.26.504-.394 3.927 1.82 8.183 1.82 12.063 0 .165.135.333.267.504.394-.658.39-1.345.722-2.055.99.376.75.815 1.46 1.305 2.13a19.91 19.91 0 0 0 6.077-3.07c.522-6.03-.892-11.26-4.075-15.9zM8.02 17.05c-1.208 0-2.2-1.11-2.2-2.47s.97-2.48 2.2-2.48c1.23 0 2.222 1.12 2.2 2.48 0 1.36-.97 2.47-2.2 2.47zm7.96 0c-1.21 0-2.2-1.11-2.2-2.47s.97-2.48 2.2-2.48c1.23 0 2.22 1.12 2.2 2.48 0 1.36-.97 2.47-2.2 2.47z\"/></svg>
+        </div>
+        <span class=\"region\">North America &middot; KOTC</span>
+        <h3>Mask League NA KOTC</h3>
+        <span class=\"tag\">Partnered</span>
+        <span class=\"join\">Join server
+          <svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\"><path d=\"M5 12h14M13 6l6 6-6 6\"/></svg>
+        </span>
+      </a>
+
+      <a class=\"card\" href=\"https://discord.gg/hXDC5dPxPd\" target=\"_blank\" rel=\"noopener\">
+        <div class=\"platform\">
+          <svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"currentColor\"><path d=\"M20.317 4.369A19.79 19.79 0 0 0 16.558 3a14.6 14.6 0 0 0-.642 1.32 18.27 18.27 0 0 0-5.487 0A12.6 12.6 0 0 0 9.785 3a19.74 19.74 0 0 0-3.762 1.37C2.418 9.79 1.526 15.07 1.972 20.27a19.93 19.93 0 0 0 6.075 3.07c.491-.67.93-1.38 1.305-2.13a12.9 12.9 0 0 1-2.054-.99c.172-.127.34-.26.504-.394 3.927 1.82 8.183 1.82 12.063 0 .165.135.333.267.504.394-.658.39-1.345.722-2.055.99.376.75.815 1.46 1.305 2.13a19.91 19.91 0 0 0 6.077-3.07c.522-6.03-.892-11.26-4.075-15.9zM8.02 17.05c-1.208 0-2.2-1.11-2.2-2.47s.97-2.48 2.2-2.48c1.23 0 2.222 1.12 2.2 2.48 0 1.36-.97 2.47-2.2 2.47zm7.96 0c-1.21 0-2.2-1.11-2.2-2.47s.97-2.48 2.2-2.48c1.23 0 2.22 1.12 2.2 2.48 0 1.36-.97 2.47-2.2 2.47z\"/></svg>
+        </div>
+        <span class=\"region\">Community &middot; Won</span>
+        <h3>Content Creator Cove</h3>
+        <span class=\"tag won\">★ Server I won</span>
+        <span class=\"join\">Join server
+          <svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\"><path d=\"M5 12h14M13 6l6 6-6 6\"/></svg>
+        </span>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- Socials -->
+  <section id=\"streams\">
+    <div class=\"eyebrow\">// 03 — Streams &amp; videos</div>
+    <h2>Watch me play.</h2>
+    <p class=\"section-sub\">Live on Twitch. Uploads on YouTube.</p>
+
+    <div class=\"socials\">
+      <a class=\"social twitch\" href=\"https://www.twitch.tv/drag_losw\" target=\"_blank\" rel=\"noopener\">
+        <div class=\"icon\">
+          <svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"currentColor\"><path d=\"M4 2l-2 5v14h6v3h3l3-3h5l5-5V2H4zm17 11l-3 3h-5l-3 3v-3H6V4h15v9zM16 7v6h-2V7h2zm-5 0v6H9V7h2z\"/></svg>
+        </div>
+        <div>
+          <div class=\"label\">Twitch</div>
+          <div class=\"handle\">@drag_losw</div>
+        </div>
+      </a>
+
+      <a class=\"social youtube\" href=\"https://www.youtube.com/@drag_los\" target=\"_blank\" rel=\"noopener\">
+        <div class=\"icon\">
+          <svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"currentColor\"><path d=\"M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1c.5-1.9.5-5.8.5-5.8s0-3.9-.5-5.8zM9.6 15.6V8.4l6.3 3.6-6.3 3.6z\"/></svg>
+        </div>
+        <div>
+          <div class=\"label\">YouTube</div>
+          <div class=\"handle\">@drag_los</div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <footer>
+    <div>&copy; <span id=\"year\"></span> Lanrad &mdash; Shell Shockers community.</div>
+    <div class=\"mono\">built &middot; static &middot; github pages</div>
+  </footer>
+
+</div>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>
+"
